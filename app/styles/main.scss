@@ -1,0 +1,36 @@
+body {
+ padding: 0;
+}
+
+a.nav-link {
+  cursor: pointer;
+}
+
+.form-signin {
+  input[type=email], input[type=password] {
+    max-width: 300px;
+    margin: 5px auto;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media (min-width: 34em) {
+
+}
+
+// Medium devices (tablets, 48em and up)
+@media (min-width: 48em) {
+
+}
+
+// Large devices (desktops, 62em and up)
+@media (min-width: 62em) {
+
+}
+
+// Extra large devices (large desktops, 75em and up)
+@media (min-width: 75em) {
+
+}
+
+

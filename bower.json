@@ -1,0 +1,12 @@
+{
+  "name": "firebooks",
+  "version": "0.0.1",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "appPath": "app",
+  "moduleName": "fireBooksApp",
+  "overrides": {
+  }
+}

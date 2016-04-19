@@ -1,0 +1,20 @@
+<div ng-include="'views/header.html'"></div>
+<div class="container-fluid clearfix" id="main">
+
+  <div class="row row-offcanvas row-offcanvas-left">
+    <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation" ng-include="'views/sidebar.html'"></div>
+    <div class="col-md-9 col-lg-10 main">
+      <!--toggle sidebar button-->
+      <p class="hidden-md-up">
+        <button type="button" class="btn btn-primary-outline btn-sm" data-toggle="offcanvas">
+          <i class="fa fa-chevron-left"></i> Menu
+        </button>
+      </p>
+
+     <div ng-if="subView == 'statistics'" ng-include="'views/statistics.html'"></div>
+     <div ng-if="subView == 'allBooks'" ng-include="'views/all_books.html'"></div>
+     <div ng-if="subView == 'logIn'" ng-include="'views/login.html'"></div>
+
+  </div>
+
+</div>

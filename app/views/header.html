@@ -1,0 +1,19 @@
+<nav class="navbar navbar-fixed-top navbar-dark bg-primary">
+  <button class="navbar-toggler hidden-sm-up pull-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+    ☰
+  </button>
+  <a class="navbar-brand" href="#">Tủ sách của Eddie Yang</a>
+  <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
+    <ul class="nav navbar-nav pull-right">
+      <li class="nav-item" ng-class="{ 'active': activePage == 'main' }">
+        <a class="nav-link" href="#/">Home <span class="sr-only">Home</span></a>
+      </li>
+      <li class="nav-item" ng-class="{ 'active': activePage == 'about' }">
+        <a class="nav-link" href="#/about">About</a>
+      </li>
+      <li class="nav-item" ng-class="{ 'active': activePage == 'kanban' }">
+        <a class="nav-link" href="#/kanban" data-toggle="collapse">Kanban</a>
+      </li>
+    </ul>
+  </div>
+</nav>

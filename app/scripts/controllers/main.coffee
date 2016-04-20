@@ -9,7 +9,7 @@
 ###
 angular.module 'fireBooksApp'
 .controller 'MainCtrl', ['$scope', 'ConnectionService', 'BooksService', 'MainService', ($scope, ConnectionService, BooksService, MainService) ->
-
+  $scope.isLoading = true
   $scope.activePage = MainService.activePage()
   $scope.subView = 'statistics'
   $scope.uid = undefined
@@ -18,8 +18,16 @@ angular.module 'fireBooksApp'
     password: ""
 
   ConnectionService.checkAuthState()
+
   BooksService.countOfAllBooks().then (value) ->
     $scope.countOfAllBooks = value
+
+  BooksService.countOfPrintedBooks().then (value) ->
+    $scope.countOfPrintedBooks = value
+
+  BooksService.countOfDigitalBooks().then (value) ->
+    $scope.isLoading = false
+    $scope.countOfDigitalBooks = value
 
   $scope.logOut = () ->
     ConnectionService.logOut()

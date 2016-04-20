@@ -21,7 +21,8 @@
           <i class="fa fa-archive fa-5x"></i>
         </div>
         <h6 class="text-uppercase">Books</h6>
-        <h1 class="display-1" ng-bind="countOfAllBooks"></h1>
+        <heart-pulse ng-show='isLoading'></heart-pulse>
+        <h1 ng-show='!isLoading' class="display-1" ng-bind="countOfAllBooks"></h1>
       </div>
     </div>
   </div>
@@ -33,7 +34,8 @@
           <i class="fa fa-book fa-4x"></i>
         </div>
         <h6 class="text-uppercase">Printed</h6>
-        <h1 class="display-1">300</h1>
+        <heart-pulse ng-show='isLoading'></heart-pulse>
+        <h1 ng-show='!isLoading' class="display-1" ng-bind="countOfPrintedBooks"></h1>
       </div>
     </div>
   </div>
@@ -45,7 +47,8 @@
           <i class="fa fa-file-pdf-o fa-4x"></i>
         </div>
         <h6 class="text-uppercase">Ebook</h6>
-        <h1 class="display-1">15</h1>
+        <heart-pulse ng-show='isLoading'></heart-pulse>
+        <h1 ng-show='!isLoading' class="display-1" ng-bind="countOfDigitalBooks"></h1>
       </div>
     </div>
   </div>

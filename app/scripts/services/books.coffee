@@ -25,10 +25,40 @@ angular.module 'fireBooksApp'
     )
     defer.promise
 
-  fetchBooks = () ->
+  fetchBooks = (page=1, pageSize=10, oldPage=null, firstKey=null, lastKey=null) ->
+    defer = $q.defer()
     ref = ConnectionService.connectFirebase()
-    booksRef = ref.child("books").orderByChild("created_at").limitToLast(30)
-    return $firebaseArray(booksRef)
+    if page is 1
+      books = $firebaseArray(ref.child("books").orderByKey().limitToFirst(pageSize))
+    else
+      gap = Math.abs(oldPage - page)
+      NoItemFetched = (gap - 1) * pageSize
+      if oldPage > page
+        if gap is 1
+          books = $firebaseArray(ref.child("books").orderByKey().endAt(firstKey).limitToLast(pageSize+1))
+        else
+          tmp = $firebaseArray(ref.child("books").orderByKey().endAt(firstKey).limitToLast(NoItemFetched+1))
+          tmp.$loaded () ->
+            firstKey = _.first(tmp).$id
+            books = $firebaseArray(ref.child("books").orderByKey().endAt(firstKey).limitToLast(pageSize+1))
+            books.$loaded ()->
+              defer.resolve books
+      else
+        if gap is 1
+          books = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(pageSize+1))
+        else
+          tmp = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(NoItemFetched+1))
+          tmp.$loaded () ->
+            lastKey = _.last(tmp).$id
+            books = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(pageSize+1))
+            books.$loaded ()->
+              defer.resolve books
+
+    if books?
+      books.$loaded ()->
+        defer.resolve books
+
+    defer.promise
 
   return {
     fetchBooks: fetchBooks

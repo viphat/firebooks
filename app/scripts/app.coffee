@@ -15,7 +15,8 @@ angular
   'ngResource',
   'ngRoute',
   'ngSanitize',
-  'firebase'
+  'firebase',
+  'ngImgur'
 ]
 .config ($routeProvider) ->
   $routeProvider
@@ -40,4 +41,3 @@ angular
       active: page: 'kanban'
     .otherwise
       redirectTo: '/'
-

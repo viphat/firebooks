@@ -1,6 +1,9 @@
 angular.module 'fireBooksApp'
 .service 'ConnectionService', [ ->
 
+  FirebaseUrl = () ->
+    return "https://flickering-inferno-2708.firebaseio.com"
+
   connectFirebase = (sub=null) ->
     return new Firebase("https://flickering-inferno-2708.firebaseio.com") unless sub?
     return new Firebase("https://flickering-inferno-2708.firebaseio.com/#{sub}")
@@ -49,6 +52,7 @@ angular.module 'fireBooksApp'
     checkAuthState: checkAuthState
     logIn: logIn
     logOut: logOut
+    FirebaseUrl: FirebaseUrl
   }
 
 ]

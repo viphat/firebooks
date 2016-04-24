@@ -1,0 +1,32 @@
+<nav>
+  <ul class="pagination">
+  <li class="page-item">
+      <a class="page-link" aria-label="Previous" ng-click="goToFirstPage()">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">First page</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" aria-label="Previous" ng-click="prevPage()">
+        <span aria-hidden="true">&lt;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li ng-repeat="num in pageArray" class="page-item" ng-class="{'active' : currentPage == num }">
+      <a class="page-link"ng-click="setPage(num)">{{num}}</a>
+      <span ng-if="currentPage == num" class="sr-only">(current)</span>
+    </li>
+    <li class="page-item">
+      <a class="page-link" aria-label="Next" ng-click="nextPage()">
+        <span aria-hidden="true">&gt;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" aria-label="Next" ng-click="goToLastPage()">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>

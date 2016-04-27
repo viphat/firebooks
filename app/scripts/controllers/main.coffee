@@ -34,6 +34,8 @@ angular.module 'fireBooksApp'
   promises.push BooksService.countOfAllBooks()
   promises.push BooksService.countOfPrintedBooks()
   promises.push BooksService.countOfDigitalBooks()
+  promises.push BooksService.countOfReadBooks()
+  promises.push BooksService.countOfNeedToReadAgainBooks()
 
   $q.all(promises).then (values) ->
     $scope.isLoading = false
@@ -41,6 +43,7 @@ angular.module 'fireBooksApp'
     $scope.totalPage = parseInt($scope.countOfAllBooks / $scope.pageSize) + 1
     $scope.countOfPrintedBooks = values[1]
     $scope.countOfDigitalBooks = values[2]
+    $scope.countOfReadBooks = parseInt(values[3]) + parseInt(values[4])
 
   $scope.goToLastPage = () ->
     return if $scope.currentPage is $scope.totalPage
@@ -124,6 +127,9 @@ angular.module 'fireBooksApp'
       $scope.book = snapshot.val()
     )
 
+  $scope.ratingSelected = () ->
+    console.log "You choose #{$scope.book.rating} star."
+
   $scope.save = () ->
     return unless $scope.book?
     return unless $scope.$bookId?
@@ -131,7 +137,8 @@ angular.module 'fireBooksApp'
       ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
       ref.update($scope.book, (error)->
         unless (error)
-          console.log "Upload succeeded"
+          $scope.isEditing = false
+          $scope.$apply()
       )
 
   $scope.resetForm = () ->

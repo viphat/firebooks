@@ -1,6 +1,22 @@
 angular.module 'fireBooksApp'
 .service 'BooksService', [ '$q', '$firebaseArray', 'ConnectionService', ($q, $firebaseArray, ConnectionService) ->
 
+  countOfReadBooks = () ->
+    defer = $q.defer()
+    ref = ConnectionService.connectFirebase("books")
+    ref.orderByChild("reading_status").equalTo("read").once("value", (snapshot) ->
+      defer.resolve snapshot.numChildren()
+    )
+    defer.promise
+
+  countOfNeedToReadAgainBooks = () ->
+    defer = $q.defer()
+    ref = ConnectionService.connectFirebase("books")
+    ref.orderByChild("reading_status").equalTo("need_to_read_again").once("value", (snapshot) ->
+      defer.resolve snapshot.numChildren()
+    )
+    defer.promise
+
   countOfDigitalBooks = () ->
     defer = $q.defer()
     ref = ConnectionService.connectFirebase("books")
@@ -65,6 +81,8 @@ angular.module 'fireBooksApp'
     countOfAllBooks: countOfAllBooks
     countOfPrintedBooks: countOfPrintedBooks
     countOfDigitalBooks: countOfDigitalBooks
+    countOfReadBooks: countOfReadBooks
+    countOfNeedToReadAgainBooks: countOfNeedToReadAgainBooks
   }
 
 ]

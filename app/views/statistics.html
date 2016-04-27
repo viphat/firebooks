@@ -59,8 +59,9 @@
         <div class="rotate">
           <i class="fa fa-eye fa-4x"></i>
         </div>
-        <h6 class="text-uppercase">Readed</h6>
-        <h1 class="display-1">158</h1>
+        <h6 class="text-uppercase">Read</h6>
+        <heart-pulse ng-show='isLoading'></heart-pulse>
+        <h1 ng-show='!isLoading' class="display-1" ng-bind="countOfReadBooks"></h1>
       </div>
     </div>
   </div>

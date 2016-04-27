@@ -1,11 +1,12 @@
 <div ng-if="book" class="card text-xs-center">
-  <img ng-show="!isEditing && book.image_url != ''" class="card-img-top" ng-src="{{book.image_url}}" alt="Book Cover"/>
+  <img ng-show="!isEditing && book.image_url != '' && book.image_url != undefined " class="card-img-top" ng-src="{{book.image_url}}" alt="Book Cover"/>
   <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
     <label class="file text-xs-left">
       <input type='file' accept='image/*' on-file-changed="uploadToImgur" />
       <span class="file-custom"></span>
     </label>
   </div>
+  <heart-pulse ng-show='isUploading'></heart-pulse>
   <img ng-show="isEditing && book.image_url != ''" class="card-img-top thumbnail" ng-src="{{book.image_url}}" alt="Book Cover"/>
   <div class="card-block">
     <div class="table-responsive">
@@ -56,7 +57,7 @@
                 <option value="want_to_read">Dự định đọc</option>
                 <option value="reading">Đang đọc</option>
                 <option value="read">Đã đọc</option>
-                <option value="need_to_read_again">Cần đọc lại trong tương lai</option>
+                <option value="need_to_read_again">Sẽ đọc lại</option>
               </select>
             </td>
           </tr>
@@ -66,6 +67,7 @@
               <span ng-if="!isEditing && book.current_status=='available'">Sẵn có</span>
               <span ng-if="!isEditing && book.current_status=='has_lost'">Đã mất</span>
               <span ng-if="!isEditing && book.current_status=='has_lent'">Cho mượn - Người giữ {{ book.borrower }}</span>
+              <span ng-if="!isEditing && book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.borrower }}</span>
               <span ng-if="!isEditing && book.current_status=='licensed'">Có bản quyền</span>
               <span ng-if="!isEditing && book.current_status=='not_licensed'">Không có bản quyền</span>
               <select ng-if="isEditing" class="form-control c-select" ng-model="book.current_status">
@@ -89,19 +91,21 @@
               </span>
             </td>
             <td ng-if="isEditing">
-            <div star-rating="" ng-model="book.rating" on-rating-select="ratingSelected"></div>
+              <div star-rating="" ng-model="book.rating" on-rating-select="ratingSelected"></div>
             </td>
           </tr>
           <tr>
             <td>Nhận xét</td>
             <td>
-              <span ng-if="book.review == '' ">Chưa có nhận xét</span>
-              <span ng-if="book.review != '' " ng-bind="book.review"></span>
+              <span ng-if="!isEditing && ( book.review == '' || book.review == undefined ) ">Chưa có nhận xét</span>
+              <span ng-if="!isEditing && book.review != '' && book.review != undefined" marked="book.review"></span>
+              <textarea ng-if="isEditing" class="form-control" rows="5" ng-model="book.review"></textarea>
             </td>
           </tr>
           <tr>
-            <td>Bài viết trên Blog</td>
-            <td ng-if="!isEditing">{{book.review_url }}</td>
+            <td>Blog</td>
+            <td ng-if="!isEditing && (book.review_url == '' || book.review_url == undefined )">Chưa có</td>
+            <td ng-if="!isEditing && book.review_url != '' && book.review_url != undefined ">{{ book.review_url }}</td>
             <td ng-if="isEditing">
               <div class="input-group">
                 <span class="input-group-addon">Link</span>
@@ -111,7 +115,10 @@
           </tr>
           <tr>
             <td>Ghi chú</td>
-            <td ng-if="!isEditing">{{ book.more_info }}</td>
+            <td ng-if="!isEditing">
+              <span ng-if="book.more_info == '' || book.more_info == undefined">Chưa có</span>
+              <span ng-if="book.more_info != '' && book.more_info != undefined" marked="book.more_info"></span>
+            </td>
             <td ng-if="isEditing">
               <textarea class="form-control" rows="3" ng-model="book.more_info"></textarea>
             </td>

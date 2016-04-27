@@ -16,7 +16,9 @@ angular
   'ngRoute',
   'ngSanitize',
   'firebase',
-  'ngImgur'
+  'ngImgur',
+  'hc.marked',
+  'angularModalService'
 ]
 .config ($routeProvider) ->
   $routeProvider

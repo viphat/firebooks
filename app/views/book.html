@@ -1,6 +1,6 @@
 <div ng-if="book" class="card text-xs-center">
   <img ng-show="!isEditing && book.image_url != '' && book.image_url != undefined " class="card-img-top" ng-src="{{book.image_url}}" alt="Book Cover"/>
-  <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
+    <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
     <label class="file text-xs-left">
       <input type='file' accept='image/*' on-file-changed="uploadToImgur" />
       <span class="file-custom"></span>

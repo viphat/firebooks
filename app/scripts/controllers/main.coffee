@@ -29,6 +29,7 @@ angular.module 'fireBooksApp'
     password: ""
 
   ConnectionService.checkAuthState()
+  # BooksService.addSlugToBooks()
   promises = []
 
   promises.push BooksService.countOfAllBooks()

@@ -1,5 +1,20 @@
 angular.module 'fireBooksApp'
-.service 'BooksService', [ '$q', '$firebaseArray', 'ConnectionService', ($q, $firebaseArray, ConnectionService) ->
+.service 'BooksService', [ '$q', '$firebaseArray', 'ConnectionService', 'MainService', ($q, $firebaseArray, ConnectionService, MainService) ->
+
+  addSlugToBooks = () ->
+    ref = ConnectionService.connectFirebase()
+    books = $firebaseArray(ref.child("books").orderByKey().limitToFirst(400))
+    books.$loaded ()->
+      _.each(books, (book)->
+        slug = MainService.slugify(book.title)
+        book = _.merge(book, { slug: slug } )
+        id = book.$id
+        bookRef = ConnectionService.connectFirebase("books/#{id}")
+        book = _.omit( book, ['$id', '$priority'] )
+        bookRef.update(book, (error) ->
+          return
+        )
+      )
 
   countOfReadBooks = () ->
     defer = $q.defer()
@@ -77,6 +92,7 @@ angular.module 'fireBooksApp'
     defer.promise
 
   return {
+    addSlugToBooks: addSlugToBooks
     fetchBooks: fetchBooks
     countOfAllBooks: countOfAllBooks
     countOfPrintedBooks: countOfPrintedBooks

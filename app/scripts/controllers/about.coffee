@@ -9,6 +9,5 @@
 ###
 angular.module 'fireBooksApp'
 .controller 'AboutCtrl', [ '$scope', 'MainService', ($scope, MainService) ->
-  $scope.activePage = MainService.activePage()
   return
 ]

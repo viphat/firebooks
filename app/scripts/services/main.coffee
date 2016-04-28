@@ -1,5 +1,5 @@
 angular.module 'fireBooksApp'
-.service 'MainService', [ '$route', ($route) ->
+.service 'MainService', [ () ->
 
   slugify = (text) ->
     text = text.toString().toLowerCase()
@@ -15,12 +15,7 @@ angular.module 'fireBooksApp'
     text = text.slice(0,-1) if text.endsWith("-")
     return text
 
-  activePage = () ->
-    return $route.current.active.page if $route.current.active?
-    return ''
-
   return {
-    activePage: activePage
     slugify: slugify
   }
 

@@ -27,10 +27,11 @@ angular
       controller: 'MainCtrl'
       controllerAs: 'main'
       active: page: 'main'
-    .when '/example',
-      templateUrl: 'example.html'
-      controller: 'MainCtrl'
-      controllerAs: 'main'
+    .when '/books',
+      templateUrl: 'views/books.html'
+      controller: 'BookCtrl'
+      controllerAs: 'books'
+      active: page: 'main'
     .when '/about',
       templateUrl: 'views/about.html'
       controller: 'AboutCtrl'

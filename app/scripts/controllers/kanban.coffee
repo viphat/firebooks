@@ -8,7 +8,6 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'KanbanCtrl', [ '$scope', 'MainService', ($scope, MainService) ->
-  $scope.activePage = MainService.activePage()
+.controller 'KanbanCtrl', [ '$scope', ($scope) ->
   return
 ]

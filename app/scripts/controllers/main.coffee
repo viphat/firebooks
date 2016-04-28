@@ -8,21 +8,9 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'MainCtrl', ['$q', '$rootScope', '$scope', 'ConnectionService', 'BooksService', ($q, $rootScope, $scope, ConnectionService, BooksService) ->
+.controller 'MainCtrl', ['$q', '$scope', 'BooksService', ($q, $scope, BooksService) ->
 
   $scope.isLoading = true
-  $scope.uid = undefined
-  $scope.user =
-    email: ""
-    password: ""
-
-  $rootScope.$on('setSubView', (event, args)->
-    $scope.subView = args if $scope.subView != args
-  )
-
-  $rootScope.$on('UserLogOut', (event, args)->
-    $scope.uid = undefined if $scope.uid?
-  )
 
   promises = []
 
@@ -40,13 +28,4 @@ angular.module 'fireBooksApp'
     $scope.countOfDigitalBooks = values[2]
     $scope.countOfReadBooks = parseInt(values[3]) + parseInt(values[4])
 
-  $scope.logIn = () ->
-    return unless $scope.user?
-    return unless $scope.user.email?
-    return unless $scope.user.password?
-    $scope.uid = undefined
-
-    ConnectionService.logIn($scope.user).then (res) ->
-      $scope.uid = res.uid
-      $scope.$apply()
 ]

@@ -1,12 +1,12 @@
 <ul class="nav nav-pills nav-stacked">
   <li class="nav-item">
-    <a class="nav-link" ng-class="{'active' : item == 'statistics' }" ng-click="setSubView('statistics')"><i class="fa fa-line-chart fa-fw"></i> Statistics</a>
-    <a class="nav-link" href='#/books' ng-class="{'active' : item == 'viewAllBooks' }"><i class="fa fa-archive fa-fw"></i> Books</a>
-    <a class="nav-link" ng-class="{'active' : item == 'authors' }" ng-click="setSubView('authors')"><i class="fa fa-users fa-fw"></i> Authors</a>
-    <a class="nav-link" ng-class="{'active' : item == 'findABook' }" ng-click="setSubView('findABook')"><i class="fa fa-search fa-fw"></i> Find a Book</a>
-    <a class="nav-link" ng-class="{'active' : item == 'addABook' }" ng-click="setSubView('addABook')"><i class="fa fa-plus-square fa-fw"></i> Add a Book</a>
-    <a class="nav-link" ng-class="{'active' : item == 'addAQuote' }" ng-click="setSubView('addAQuote')"><i class="fa fa-plus-square-o fa-fw"></i> Add a Quote</a>
-    <a class="nav-link" ng-class="{'active' : item == 'logIn' }" ng-if="uid == undefined" ng-click="setSubView('logIn')"><i class="fa fa-sign-in fa-fw"></i> Log in</a>
+    <a class="nav-link" href="#/" ng-class="{'active' : activeSubItem == 'statistics' }" ><i class="fa fa-line-chart fa-fw"></i> Statistics</a>
+    <a class="nav-link" href='#/books' ng-class="{'active' : activeSubItem == 'books' }"><i class="fa fa-archive fa-fw"></i> Books</a>
+    <a class="nav-link" href="#/authors" ng-class="{'active' : activeSubItem == 'authors' }"><i class="fa fa-users fa-fw"></i> Authors</a>
+    <a class="nav-link" href="#/search" ng-class="{'active' : activeSubItem == 'findABook' }" ><i class="fa fa-search fa-fw"></i> Find a Book</a>
+    <a class="nav-link" href="#/new" ng-class="{'active' : activeSubItem == 'addABook' }"><i class="fa fa-plus-square fa-fw"></i> Add a Book</a>
+    <a class="nav-link" href="#/add_a_quote" ng-class="{'active' : activeSubItem == 'addAQuote' }"><i class="fa fa-plus-square-o fa-fw"></i> Add a Quote</a>
+    <a class="nav-link" href="#/login" ng-class="{'active' : activeSubItem == 'logIn' }" ng-if="uid == undefined" ng-click="setSubView('logIn')"><i class="fa fa-sign-in fa-fw"></i> Log in</a>
     <a class="nav-link" ng-if="uid != undefined" ng-click="logOut()"><i class="fa fa-sign-out fa-fw"></i> Log out</a>
   </li>
 </ul>

@@ -1,18 +1,35 @@
-<div class="container row" ng-show="uid == undefined">
-  <div class="text-xs-center col-sm-6 col-md-6 col-md-offset-3">
-  <form class="form-signin">
-  <h3 class=" login-title">Đăng nhập để sử dụng Tủ sách</h3>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus autocomplete="off" ng-model="user.email">
-  <label for="inputEmail" class="sr-only">Email</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required autofocus autocomplete="off" ng-model="user.password">
-  <label for="inputPassword" class="sr-only">Password</label>
-  <button type="button" class="btn btn-secondary" ng-click="logIn()">Log in</button>
-  </form>
-  </div>
-</div>
+<header></header>
+<div class="container-fluid clearfix" id="main">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
+      <sidebar></sidebar>
+    </div>
+    <div class="col-md-9 col-lg-10 main">
+      <!--toggle sidebar button-->
+      <p class="hidden-md-up">
+        <button type="button" class="btn btn-primary-outline btn-sm" data-toggle="offcanvas">
+          <i class="fa fa-chevron-left"></i> Menu
+        </button>
+      </p>
+      <div class="container row" ng-show="uid == undefined">
+        <div class="text-xs-center col-sm-6 col-md-6 col-md-offset-3">
+        <form class="form-signin">
+        <h3 class=" login-title">Đăng nhập để sử dụng Tủ sách</h3>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus autocomplete="off" ng-model="user.email">
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required autofocus autocomplete="off" ng-model="user.password">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <button type="button" class="btn btn-secondary" ng-click="logIn()">Log in</button>
+        </form>
+        </div>
+      </div>
 
-<div ng-show="uid != undefined" class="container row">
-  <div class="alert alert-info" role="alert">
-  <strong>Okay!</strong>  Bạn đã đăng nhập thành công và có thể sử dụng các chức năng còn lại của Site.
+      <div ng-show="uid != undefined" class="container row">
+        <div class="alert alert-info" role="alert">
+        <strong>Okay!</strong>  Bạn đã đăng nhập thành công và có thể sử dụng các chức năng còn lại của Site.
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

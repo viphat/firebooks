@@ -8,7 +8,7 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'SidebarCtrl', [ '$scope', '$location', 'ConnectionService', 'MainService', ($scope, $location, ConnectionService, MainService) ->
+.controller 'SidebarCtrl', [ '$scope', '$route', 'ConnectionService', 'MainService', ($scope, $route, ConnectionService, MainService) ->
 
   ConnectionService.checkAuthState()
 
@@ -20,12 +20,11 @@ angular.module 'fireBooksApp'
     ConnectionService.logOut()
     $scope.$emit('UserLogOut')
 
-  $scope.setSubView = (item) ->
-    $scope.item = item
-    $scope.$emit('setSubView', item)
+  checkActiveSubItem = () ->
+    return $route.current.active.sub if $route.current.active?
+    return 'statistics'
 
-  console.log $location.path()
-  $scope.setSubView('statistics')
+  $scope.activeSubItem = checkActiveSubItem()
 
   return
 ]

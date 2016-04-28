@@ -25,22 +25,28 @@ angular
     .when '/',
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
-      controllerAs: 'main'
-      active: page: 'main'
+      active:
+        page: 'main'
+        sub: 'statistics'
+    .when '/login',
+      templateUrl: 'views/login.html'
+      controller: 'LogInCtrl'
+      active:
+        page: 'main'
+        sub: 'logIn'
     .when '/books',
       templateUrl: 'views/books.html'
       controller: 'BookCtrl'
-      controllerAs: 'books'
-      active: page: 'main'
+      active:
+        page: 'main'
+        sub: 'books'
     .when '/about',
       templateUrl: 'views/about.html'
       controller: 'AboutCtrl'
-      controllerAs: 'about'
       active: page: 'about'
     .when '/kanban',
       templateUrl: 'views/kanban.html'
       controller: 'KanbanCtrl'
-      controllerAs: 'kanban'
       active: page: 'kanban'
     .otherwise
       redirectTo: '/'

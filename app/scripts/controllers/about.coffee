@@ -8,6 +8,6 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'AboutCtrl', [ '$scope', 'MainService', ($scope, MainService) ->
+.controller 'AboutCtrl', [ '$scope', ($scope) ->
   return
 ]

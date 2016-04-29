@@ -26,7 +26,7 @@ angular.module 'fireBooksApp'
 
     ConnectionService.logIn($scope.user).then (res) ->
       $rootScope.uid = res.uid
-      $scope.$apply()
+      $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
 
   return
 ]

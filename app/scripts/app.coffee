@@ -36,10 +36,16 @@ angular
         sub: 'logIn'
     .when '/books',
       templateUrl: 'views/books.html'
-      controller: 'BookCtrl'
+      controller: 'BooksCtrl'
       active:
         page: 'main'
         sub: 'books'
+    .when '/books/:slug',
+      templateUrl: 'views/book.html'
+      controller: 'BookCtrl'
+      active:
+        page: 'main'
+        sub: 'book'
     .when '/about',
       templateUrl: 'views/about.html'
       controller: 'AboutCtrl'

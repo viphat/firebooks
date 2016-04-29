@@ -41,7 +41,7 @@
                 <span ng-if="book.book_type == 'online_course'" title="Khóa học online">
                   <i class="fa fa-youtube-play fa-fw"></i>
                 </span>
-                <a ng-click="selectBook(book.$id)">{{ book.title }}</a>&nbsp;
+                <a ng-href="#/books/{{book.slug}}">{{ book.title }}</a>&nbsp;
                 <span ng-if="book.image_url != ''  && book.image_url != undefined" title="Có ảnh bìa">
                   <i class="fa fa-picture-o fa-fw"></i>
                 </span>

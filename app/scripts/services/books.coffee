@@ -78,7 +78,10 @@ angular.module 'fireBooksApp'
         if gap is 1
           books = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(pageSize+1))
         else
-          tmp = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(NoItemFetched+1))
+          if lastKey is null
+            tmp = $firebaseArray(ref.child("books").orderByKey().limitToFirst(NoItemFetched+1))
+          else
+            tmp = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(NoItemFetched+1))
           tmp.$loaded () ->
             lastKey = _.last(tmp).$id
             books = $firebaseArray(ref.child("books").orderByKey().startAt(lastKey).limitToFirst(pageSize+1))

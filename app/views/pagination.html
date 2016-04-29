@@ -13,7 +13,7 @@
       </a>
     </li>
     <li ng-repeat="num in pageArray" class="page-item" ng-class="{'active' : currentPage == num }">
-      <a class="page-link"ng-click="setPage(num)">{{num}}</a>
+      <a class="page-link" ng-click="setPage(num)">{{num}}</a>
       <span ng-if="currentPage == num" class="sr-only">(current)</span>
     </li>
     <li class="page-item">

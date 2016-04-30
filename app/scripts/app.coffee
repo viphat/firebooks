@@ -18,7 +18,14 @@ angular
   'firebase',
   'ngImgur',
   'hc.marked',
-  'angularModalService'
+  'angularModalService',
+  'elasticsearch'
+]
+.service 'esClient', [ 'esFactory', (esFactory) ->
+  return esFactory({
+    host: 'http://search.viphat.work:9200/',
+    log: 'trace'
+  })
 ]
 .config ($routeProvider) ->
   $routeProvider

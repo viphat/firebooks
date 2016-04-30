@@ -1,7 +1,7 @@
 <div id="BookPage" page-wrapper="">
   <div ng-if="book" class="card text-xs-center">
     <img ng-show="!isEditing && book.image_url != '' && book.image_url != undefined " class="card-img-top" ng-src="{{book.image_url}}" alt="Book Cover"/>
-      <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
+    <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
       <label class="file text-xs-left">
         <input type='file' accept='image/*' on-file-changed="uploadToImgur" />
         <span class="file-custom"></span>
@@ -75,7 +75,7 @@
                 <span ng-if="!isEditing && book.current_status=='available'">Sẵn có</span>
                 <span ng-if="!isEditing && book.current_status=='has_lost'">Đã mất</span>
                 <span ng-if="!isEditing && book.current_status=='has_lent'">Cho mượn - Người giữ {{ book.borrower }}</span>
-                <span ng-if="!isEditing && book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.borrower }}</span>
+                <span ng-if="!isEditing && book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.receiver }}</span>
                 <span ng-if="!isEditing && book.current_status=='licensed'">Có bản quyền</span>
                 <span ng-if="!isEditing && book.current_status=='not_licensed'">Không có bản quyền</span>
                 <select ng-if="isEditing" class="form-control c-select" ng-model="book.current_status">

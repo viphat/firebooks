@@ -53,6 +53,12 @@ angular
       active:
         page: 'main'
         sub: 'books'
+    .when '/books/new',
+      templateUrl: 'views/new_book.html'
+      controller: 'BookCtrl'
+      active:
+        page: 'main'
+        sub: 'new book'
     .when '/books/:slug',
       templateUrl: 'views/book.html'
       controller: 'BookCtrl'

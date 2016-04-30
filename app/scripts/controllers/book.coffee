@@ -8,13 +8,9 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'BookCtrl', ['$q', '$firebaseObject', '$scope', '$routeParams', 'ConnectionService', 'BooksService', 'imgurService', ($q, $firebaseObject, $scope, $routeParams, ConnectionService, BooksService, imgurService) ->
+.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', 'ConnectionService', 'BooksService', 'imgurService', ($q, $location, $timeout, $scope, $routeParams, ConnectionService, BooksService, imgurService) ->
 
-  $scope.slug = $routeParams.slug || ""
-
-  $scope.isEditing = false
   $scope.isUploading = false
-  $scope.isLoading = false
 
   LoadBookBySlug = () ->
     return if $scope.isLoading is true
@@ -27,13 +23,39 @@ angular.module 'fireBooksApp'
       $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
     )
 
-  LoadBookBySlug()
+  if $location.path() == "/books/new"
+    $scope.book = {}
+  else
+    $scope.slug = $routeParams.slug || ""
+    $scope.isEditing = false
+    $scope.isLoading = false
+    LoadBookBySlug()
+
+  $scope.create = () ->
+    console.log $scope.book
+    return unless $scope.book?
+    return unless $scope.book.title?
+    return unless $scope.book.author?
+    return unless $scope.book.slug?
+    return unless $scope.book.book_type?
+    return unless $scope.book.reading_status?
+    return unless $scope.book.current_status?
+    ref = ConnectionService.connectFirebase("books")
+    ref.push($scope.book, (error)->
+      if (error)
+        console.log("Add Book Failed")
+      else
+        console.log("Successful")
+        $timeout(()->
+          $location.path("/books/#{$scope.book.slug}")
+          $scope.$apply()
+        , 1500 )
+    )
 
   $scope.selectBookById = (id) ->
     $scope.$bookId = id
     ref = ConnectionService.connectFirebase("books/#{id}")
     ref.on("value", (snapshot)->
-      $scope.subView = "viewBook"
       $scope.book = snapshot.val()
     )
 

@@ -30,6 +30,7 @@ angular.module 'fireBooksApp'
   loadTotalPage = () ->
     BooksService.countOfAllBooks().then (res) ->
       $scope.totalPage =  parseInt( res / $scope.pageSize + 1)
+      calculatePageArray()
   loadTotalPage()
   $scope.pageArray = [1,2,3,4,5]
 
@@ -58,13 +59,13 @@ angular.module 'fireBooksApp'
 
   $scope.$watch('currentPage', (newValue, oldValue) ->
     $scope.oldPage = oldValue
-    calculatePageArray()
     unless newValue is oldValue
       LoadBooks()
   )
 
   calculatePageArray = () ->
     return $scope.pageArray = [1,2,3,4,5] if $scope.currentPage is 1 || $scope.currentPage is 2
+    console.log $scope.totalPage
     return $scope.pageArray = [$scope.currentPage-4,$scope.currentPage-3,$scope.currentPage-2,$scope.currentPage-1,$scope.currentPage] if $scope.currentPage is $scope.totalPage
     return $scope.pageArray = [$scope.currentPage-3,$scope.currentPage-2,$scope.currentPage-1,$scope.currentPage,$scope.currentPage+1] if $scope.currentPage is $scope.totalPage - 1
     l = $scope.currentPage - 2

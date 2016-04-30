@@ -55,7 +55,7 @@
             <span ng-if="book.current_status=='available'">Sẵn có</span>
             <span ng-if="book.current_status=='has_lost'">Đã mất</span>
             <span ng-if="book.current_status=='has_lent'">Cho mượn - Người giữ {{ book.borrower }}</span>
-            <span ng-if="book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.borrower }}</span>
+            <span ng-if="book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.receiver }}</span>
             <span ng-if="book.current_status=='licensed'">Có bản quyền</span>
             <span ng-if="book.current_status=='not_licensed'">Không có bản quyền</span>
           </td>
@@ -64,5 +64,5 @@
       </tbody>
     </table>
   </div>
-  <div ng-include="'views/pagination.html'"></div>
+  <div ng-if="!isLoading" ng-include="'views/pagination.html'"></div>
 </div>

@@ -1,159 +1,145 @@
-<header></header>
-<div class="container-fluid clearfix" id="main">
-  <div class="row row-offcanvas row-offcanvas-left">
-    <div class="col-md-3 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
-      <sidebar></sidebar>
+<div id="BookPage" page-wrapper="">
+  <div ng-if="book" class="card text-xs-center">
+    <img ng-show="!isEditing && book.image_url != '' && book.image_url != undefined " class="card-img-top" ng-src="{{book.image_url}}" alt="Book Cover"/>
+      <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
+      <label class="file text-xs-left">
+        <input type='file' accept='image/*' on-file-changed="uploadToImgur" />
+        <span class="file-custom"></span>
+      </label>
     </div>
-    <div class="col-md-9 col-lg-10 main">
-      <!--toggle sidebar button-->
-      <p class="hidden-md-up">
-        <button type="button" class="btn btn-primary-outline btn-sm" data-toggle="offcanvas">
-          <i class="fa fa-chevron-left"></i> Menu
-        </button>
-      </p>
-      <div ng-if="book" class="card text-xs-center">
-        <img ng-show="!isEditing && book.image_url != '' && book.image_url != undefined " class="card-img-top" ng-src="{{book.image_url}}" alt="Book Cover"/>
-          <div ng-show='!isUploading && isEditing' class="form-group mg-xs-top-10" >
-          <label class="file text-xs-left">
-            <input type='file' accept='image/*' on-file-changed="uploadToImgur" />
-            <span class="file-custom"></span>
-          </label>
-        </div>
-        <heart-pulse ng-show='isUploading'></heart-pulse>
-        <img ng-show="isEditing && book.image_url != ''" class="card-img-top thumbnail" ng-src="{{book.image_url}}" alt="Book Cover"/>
-        <div class="card-block">
-          <div class="table-responsive">
-            <form>
-            <table class="table table-sm table-bordered table-striped">
-              <tbody>
-                <tr>
-                  <td style="width: 180px;">Sách</td>
-                  <td ng-if="!isEditing"><strong>{{ book.title }}</strong></td>
-                  <td ng-if="isEditing">
-                    <input type="text" class="form-control" ng-model="book.title" placeholder="Book Title" required="required" />
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width: 180px;">Slug</td>
-                  <td ng-if="!isEditing">{{ book.slug }}</td>
-                  <td ng-if="isEditing">
-                    <input type="text" class="form-control" ng-model="book.slug" placeholder="Slug" required="required" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Tác giả</td>
-                  <td ng-if="!isEditing"><strong>{{ book.author }}</strong></td>
-                  <td ng-if="isEditing">
-                    <input type="text" class="form-control" ng-model="book.author" placeholder="Book Author" required="required" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Phân loại</td>
-                  <td>
-                    <span ng-if="!isEditing && book.book_type == 'paper' ">Sách giấy</span>
-                    <span ng-if="!isEditing && book.book_type == 'ebook' ">Ebook</span>
-                    <span ng-if="!isEditing && book.book_type == 'online_course' ">Khóa học trực tuyến</span>
-                    <label class="checkbox-inline c-input c-radio" ng-if="isEditing">
-                      <input type="radio" ng-model="book.book_type" value="paper"><span class="c-indicator"></span>&nbsp;Sách giấy
-                    </label>
-                    <label class="checkbox-inline c-input c-radio" ng-if="isEditing">
-                      <input type="radio" ng-model="book.book_type" value="ebook"><span class="c-indicator"></span>&nbsp;Ebook
-                    </label>
-                    <label class="checkbox-inline c-input c-radio" ng-if="isEditing">
-                      <input type="radio" ng-model="book.book_type" value="online_course"><span class="c-indicator"></span>&nbsp;Khóa học trực tuyến
-                    </label>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Tình trạng đọc</td>
-                  <td>
-                    <span ng-if="!isEditing && book.reading_status == 'to_read' ">Chưa đọc</span>
-                    <span ng-if="!isEditing && book.reading_status == 'want_to_read' ">Dự định đọc</span>
-                    <span ng-if="!isEditing && book.reading_status == 'reading' ">Đang đọc</span>
-                    <span ng-if="!isEditing && book.reading_status == 'read' ">Đã đọc</span>
-                    <span ng-if="!isEditing && book.reading_status == 'need_to_read_again' ">Cần đọc lại trong tương lai</span>
-                    <select ng-if="isEditing" class="form-control c-select" ng-model="book.reading_status">
-                      <option value="to_read">Chưa đọc</option>
-                      <option value="want_to_read">Dự định đọc</option>
-                      <option value="reading">Đang đọc</option>
-                      <option value="read">Đã đọc</option>
-                      <option value="need_to_read_again">Sẽ đọc lại</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Tình trạng hiện tại</td>
-                  <td>
-                    <span ng-if="!isEditing && book.current_status=='available'">Sẵn có</span>
-                    <span ng-if="!isEditing && book.current_status=='has_lost'">Đã mất</span>
-                    <span ng-if="!isEditing && book.current_status=='has_lent'">Cho mượn - Người giữ {{ book.borrower }}</span>
-                    <span ng-if="!isEditing && book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.borrower }}</span>
-                    <span ng-if="!isEditing && book.current_status=='licensed'">Có bản quyền</span>
-                    <span ng-if="!isEditing && book.current_status=='not_licensed'">Không có bản quyền</span>
-                    <select ng-if="isEditing" class="form-control c-select" ng-model="book.current_status">
-                      <option value="available">Sẵn có</option>
-                      <option value="has_lost">Đã mất</option>
-                      <option value="has_lent">Cho mượn</option>
-                      <option value="has_given">Đã tặng</option>
-                      <option value="licensed">Có bản quyền</option>
-                      <option value="not_licensed">Không có bản quyền</option>
-                    </select>
-                    <input ng-if="isEditing && book.current_status == 'has_lent' " type="text" ng-model="book.borrower" class="form-control mg-xs-top-10" placeholder="Người mượn" />
-                    <input ng-if="isEditing && book.current_status == 'has_given' " type="text" ng-model="book.receiver" class="form-control mg-xs-top-10" placeholder="Người nhận" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Đánh giá</td>
-                  <td ng-if="!isEditing">
-                    <span ng-if="book.rating == 0">Chưa đánh giá</span>
-                    <span ng-if="book.rating > 0">
-                      <div star-rating="" ng-model="book.rating" readonly=true></div>
-                    </span>
-                  </td>
-                  <td ng-if="isEditing">
-                    <div star-rating="" ng-model="book.rating" on-rating-select="ratingSelected"></div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Nhận xét</td>
-                  <td>
-                    <span ng-if="!isEditing && ( book.review == '' || book.review == undefined ) ">Chưa có nhận xét</span>
-                    <span ng-if="!isEditing && book.review != '' && book.review != undefined" marked="book.review"></span>
-                    <textarea ng-if="isEditing" class="form-control" rows="5" ng-model="book.review"></textarea>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Blog</td>
-                  <td ng-if="!isEditing && (book.review_url == '' || book.review_url == undefined )">Chưa có</td>
-                  <td ng-if="!isEditing && book.review_url != '' && book.review_url != undefined ">{{ book.review_url }}</td>
-                  <td ng-if="isEditing">
-                    <div class="input-group">
-                      <span class="input-group-addon">Link</span>
-                      <input type="text" class="form-control" ng-model="book.review_url" />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ghi chú</td>
-                  <td ng-if="!isEditing">
-                    <span ng-if="book.more_info == '' || book.more_info == undefined">Chưa có</span>
-                    <span ng-if="book.more_info != '' && book.more_info != undefined" marked="book.more_info"></span>
-                  </td>
-                  <td ng-if="isEditing">
-                    <textarea class="form-control" rows="3" ng-model="book.more_info"></textarea>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </form>
-          </div>
-        </div>
-        <div class="card-footer text-xs-left">
-          <a ng-show="!isEditing" ng-click="edit()" class="card-link">Edit</a>
-          <a ng-show="!isEditing" ng-click="destroy()" class="card-link">Delete</a>
-          <a ng-show="isEditing" ng-click="save()" class="card-link">Save</a>
-        </div>
+    <heart-pulse ng-show='isUploading'></heart-pulse>
+    <img ng-show="isEditing && book.image_url != ''" class="card-img-top thumbnail" ng-src="{{book.image_url}}" alt="Book Cover"/>
+    <div class="card-block">
+      <div class="table-responsive">
+        <form>
+        <table class="table table-sm table-bordered table-striped">
+          <tbody>
+            <tr>
+              <td style="width: 180px;">Sách</td>
+              <td ng-if="!isEditing"><strong>{{ book.title }}</strong></td>
+              <td ng-if="isEditing">
+                <input type="text" class="form-control" ng-model="book.title" placeholder="Book Title" required="required" />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 180px;">Slug</td>
+              <td ng-if="!isEditing">{{ book.slug }}</td>
+              <td ng-if="isEditing">
+                <input type="text" class="form-control" ng-model="book.slug" placeholder="Slug" required="required" />
+              </td>
+            </tr>
+            <tr>
+              <td>Tác giả</td>
+              <td ng-if="!isEditing"><strong>{{ book.author }}</strong></td>
+              <td ng-if="isEditing">
+                <input type="text" class="form-control" ng-model="book.author" placeholder="Book Author" required="required" />
+              </td>
+            </tr>
+            <tr>
+              <td>Phân loại</td>
+              <td>
+                <span ng-if="!isEditing && book.book_type == 'paper' ">Sách giấy</span>
+                <span ng-if="!isEditing && book.book_type == 'ebook' ">Ebook</span>
+                <span ng-if="!isEditing && book.book_type == 'online_course' ">Khóa học trực tuyến</span>
+                <label class="checkbox-inline c-input c-radio" ng-if="isEditing">
+                  <input type="radio" ng-model="book.book_type" value="paper"><span class="c-indicator"></span>&nbsp;Sách giấy
+                </label>
+                <label class="checkbox-inline c-input c-radio" ng-if="isEditing">
+                  <input type="radio" ng-model="book.book_type" value="ebook"><span class="c-indicator"></span>&nbsp;Ebook
+                </label>
+                <label class="checkbox-inline c-input c-radio" ng-if="isEditing">
+                  <input type="radio" ng-model="book.book_type" value="online_course"><span class="c-indicator"></span>&nbsp;Khóa học trực tuyến
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Tình trạng đọc</td>
+              <td>
+                <span ng-if="!isEditing && book.reading_status == 'to_read' ">Chưa đọc</span>
+                <span ng-if="!isEditing && book.reading_status == 'want_to_read' ">Dự định đọc</span>
+                <span ng-if="!isEditing && book.reading_status == 'reading' ">Đang đọc</span>
+                <span ng-if="!isEditing && book.reading_status == 'read' ">Đã đọc</span>
+                <span ng-if="!isEditing && book.reading_status == 'need_to_read_again' ">Cần đọc lại trong tương lai</span>
+                <select ng-if="isEditing" class="form-control c-select" ng-model="book.reading_status">
+                  <option value="to_read">Chưa đọc</option>
+                  <option value="want_to_read">Dự định đọc</option>
+                  <option value="reading">Đang đọc</option>
+                  <option value="read">Đã đọc</option>
+                  <option value="need_to_read_again">Sẽ đọc lại</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Tình trạng hiện tại</td>
+              <td>
+                <span ng-if="!isEditing && book.current_status=='available'">Sẵn có</span>
+                <span ng-if="!isEditing && book.current_status=='has_lost'">Đã mất</span>
+                <span ng-if="!isEditing && book.current_status=='has_lent'">Cho mượn - Người giữ {{ book.borrower }}</span>
+                <span ng-if="!isEditing && book.current_status=='has_given'">Đã tặng - Người được tặng {{ book.borrower }}</span>
+                <span ng-if="!isEditing && book.current_status=='licensed'">Có bản quyền</span>
+                <span ng-if="!isEditing && book.current_status=='not_licensed'">Không có bản quyền</span>
+                <select ng-if="isEditing" class="form-control c-select" ng-model="book.current_status">
+                  <option value="available">Sẵn có</option>
+                  <option value="has_lost">Đã mất</option>
+                  <option value="has_lent">Cho mượn</option>
+                  <option value="has_given">Đã tặng</option>
+                  <option value="licensed">Có bản quyền</option>
+                  <option value="not_licensed">Không có bản quyền</option>
+                </select>
+                <input ng-if="isEditing && book.current_status == 'has_lent' " type="text" ng-model="book.borrower" class="form-control mg-xs-top-10" placeholder="Người mượn" />
+                <input ng-if="isEditing && book.current_status == 'has_given' " type="text" ng-model="book.receiver" class="form-control mg-xs-top-10" placeholder="Người nhận" />
+              </td>
+            </tr>
+            <tr>
+              <td>Đánh giá</td>
+              <td ng-if="!isEditing">
+                <span ng-if="book.rating == 0">Chưa đánh giá</span>
+                <span ng-if="book.rating > 0">
+                  <div star-rating="" ng-model="book.rating" readonly=true></div>
+                </span>
+              </td>
+              <td ng-if="isEditing">
+                <div star-rating="" ng-model="book.rating" on-rating-select="ratingSelected"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Nhận xét</td>
+              <td>
+                <span ng-if="!isEditing && ( book.review == '' || book.review == undefined ) ">Chưa có nhận xét</span>
+                <span ng-if="!isEditing && book.review != '' && book.review != undefined" marked="book.review"></span>
+                <textarea ng-if="isEditing" class="form-control" rows="5" ng-model="book.review"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Blog</td>
+              <td ng-if="!isEditing && (book.review_url == '' || book.review_url == undefined )">Chưa có</td>
+              <td ng-if="!isEditing && book.review_url != '' && book.review_url != undefined ">{{ book.review_url }}</td>
+              <td ng-if="isEditing">
+                <div class="input-group">
+                  <span class="input-group-addon">Link</span>
+                  <input type="text" class="form-control" ng-model="book.review_url" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Ghi chú</td>
+              <td ng-if="!isEditing">
+                <span ng-if="book.more_info == '' || book.more_info == undefined">Chưa có</span>
+                <span ng-if="book.more_info != '' && book.more_info != undefined" marked="book.more_info"></span>
+              </td>
+              <td ng-if="isEditing">
+                <textarea class="form-control" rows="3" ng-model="book.more_info"></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </form>
       </div>
+    </div>
+    <div class="card-footer text-xs-left">
+      <a ng-show="!isEditing" ng-click="edit()" class="card-link">Edit</a>
+      <a ng-show="!isEditing" ng-click="destroy()" class="card-link">Delete</a>
+      <a ng-show="isEditing" ng-click="save()" class="card-link">Save</a>
     </div>
   </div>
 </div>

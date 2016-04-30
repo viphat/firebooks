@@ -23,8 +23,8 @@ angular
 ]
 .service 'esClient', [ 'esFactory', (esFactory) ->
   return esFactory({
-    host: 'http://search.viphat.work:9200/',
-    log: 'trace'
+    host: 'http://search.viphat.work:9200/'
+    # log: 'trace'
   })
 ]
 .config ($routeProvider) ->

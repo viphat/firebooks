@@ -8,7 +8,7 @@
       </label>
     </div>
     <heart-pulse ng-show='isUploading'></heart-pulse>
-    <img ng-show="isEditing && book.image_url != ''" class="card-img-top thumbnail" ng-src="{{book.image_url}}" alt="Book Cover"/>
+    <img ng-show="isEditing && book.image_url != '' && book.image_url != undefined " class="card-img-top thumbnail" ng-src="{{book.image_url}}" alt="Book Cover"/>
     <div class="card-block">
       <div class="table-responsive">
         <form>

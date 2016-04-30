@@ -85,7 +85,10 @@ angular.module 'fireBooksApp'
         if $scope.oldPage < $scope.currentPage
           $scope.books = _.tail($scope.books)
         else
-          $scope.books = _.take($scope.books, $scope.books.length-1)
+          if $scope.books.length < $scope.pageSize
+            $scope.books = _.take($scope.books, $scope.books.length)
+          else
+            $scope.books = _.take($scope.books, $scope.books.length - 1)
       $scope.firstKey = _.first($scope.books).$id
       $scope.lastKey = _.last($scope.books).$id
 

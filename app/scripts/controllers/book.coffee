@@ -8,7 +8,7 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', 'ConnectionService', 'BooksService', 'imgurService', ($q, $location, $timeout, $scope, $routeParams, ConnectionService, BooksService, imgurService) ->
+.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', '$firebaseArray', 'ConnectionService', 'BooksService', 'imgurService', ($q, $location, $timeout, $scope, $routeParams, $firebaseArray, ConnectionService, BooksService, imgurService) ->
 
   $scope.isUploading = false
 
@@ -32,7 +32,6 @@ angular.module 'fireBooksApp'
     LoadBookBySlug()
 
   $scope.create = () ->
-    console.log $scope.book
     return unless $scope.book?
     return unless $scope.book.title?
     return unless $scope.book.author?
@@ -40,17 +39,23 @@ angular.module 'fireBooksApp'
     return unless $scope.book.book_type?
     return unless $scope.book.reading_status?
     return unless $scope.book.current_status?
-    ref = ConnectionService.connectFirebase("books")
-    ref.push($scope.book, (error)->
-      if (error)
-        console.log("Add Book Failed")
-      else
-        console.log("Successful")
-        $timeout(()->
-          $location.path("/books/#{$scope.book.slug}")
-          $scope.$apply()
-        , 1500 )
-    )
+    # Get Last Book
+    ref = ConnectionService.connectFirebase()
+    book = $firebaseArray(ref.child("books").orderByPriority().limitToLast(1))
+    book.$loaded ()->
+      priority = parseInt(_.first(book).$priority) + 1
+      ref = ConnectionService.connectFirebase("books")
+      _.merge($scope.book, { '.priority': priority })
+      ref.push($scope.book, (error)->
+        if (error)
+          console.log("Add Book Failed")
+        else
+          console.log("Successful")
+          $timeout(()->
+            $location.path("/books/#{$scope.book.slug}")
+            $scope.$apply()
+          , 1500 )
+      )
 
   $scope.selectBookById = (id) ->
     $scope.$bookId = id
@@ -77,7 +82,18 @@ angular.module 'fireBooksApp'
     return $scope.isEditing = true
 
   $scope.destroy = () ->
-    return
+    return unless $scope.$bookId?
+    ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
+    ref.remove((error)->
+      if error
+        console.log("Deleted Failed!")
+      else
+        console.log("Deleted Succesful.")
+        $timeout(()->
+          $location.path("/books/")
+          $scope.$apply()
+        , 1500 )
+    )
 
   $scope.uploadToImgur = (event) ->
     return unless $scope.book?

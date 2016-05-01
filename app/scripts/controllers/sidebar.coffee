@@ -1,12 +1,4 @@
 'use strict'
-
-###*
- # @ngdoc function
- # @name fireBooksApp.controller: SidebarCtrl
- # @description
- # # SidebarCtrl
- # Controller of the fireBooksApp
-###
 angular.module 'fireBooksApp'
 .controller 'SidebarCtrl', [ '$scope', '$route', 'ConnectionService', 'MainService', ($scope, $route, ConnectionService, MainService) ->
 

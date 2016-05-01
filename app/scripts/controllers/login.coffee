@@ -1,12 +1,4 @@
 'use strict'
-
-###*
- # @ngdoc function
- # @name fireBooksApp.controller:LogInCtrl
- # @description
- # # LogInCtrl
- # Controller of the fireBooksApp
-###
 angular.module 'fireBooksApp'
 .controller 'LogInCtrl', [ '$rootScope', '$scope', 'ConnectionService', ($rootScope, $scope, ConnectionService) ->
   $rootScope.uid = undefined

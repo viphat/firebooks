@@ -9,7 +9,6 @@ angular.module 'fireBooksApp'
         id = book.$id
         bookRef = ConnectionService.connectFirebase("books/#{id}")
         bookRef.on("value", (snapshot) ->
-          console.log snapshot.val()
           createOrUpdateIndex(snapshot)
         )
       )
@@ -18,10 +17,8 @@ angular.module 'fireBooksApp'
     defer = $q.defer()
     esClient.index({index: "firebase", type: "books", id: snap.key(), body: snap.val() }, (error, resp) ->
       if (error)
-        console.log error
         defer.reject(error)
       else
-        console.log resp
         defer.resolve(resp)
     )
     defer.promise

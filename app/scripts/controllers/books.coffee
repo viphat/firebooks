@@ -1,12 +1,4 @@
 'use strict'
-
-###*
- # @ngdoc function
- # @name fireBooksApp.controller:BooksCtrl
- # @description
- # # BooksCtrl
- # Controller of the fireBooksApp
-###
 angular.module 'fireBooksApp'
 .controller 'BooksCtrl', ['$q', '$routeParams', '$location', '$scope', 'ConnectionService', 'BooksService', ($q,  $routeParams, $location, $scope, ConnectionService, BooksService ) ->
 

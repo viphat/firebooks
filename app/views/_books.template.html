@@ -1,0 +1,66 @@
+<table class="table table-striped table-hover">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Tựa sách</th>
+      <th>Tác giả</th>
+      <th>Đã đọc</th>
+      <th>Hiện trạng</th>
+      <th>Đánh giá</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-if="isLoading">
+      <td colspan="6">
+        <heart-pulse ng-show='isLoading'></heart-pulse>
+      </td>
+    </tr>
+    <tr ng-repeat="book in books track by $index">
+      <td>{{ (currentPage - 1) * pageSize + $index + 1}}</td>
+      <td>
+        <span ng-if="book.book_type == 'paper'" title="Sách giấy">
+          <i class="fa fa-book fa-fw"></i>
+        </span>
+        <span ng-if="book.book_type == 'ebook'" title="Ebook">
+          <i class="fa fa-file-pdf-o fa-fw"></i>
+        </span>
+        <span ng-if="book.book_type == 'online_course'" title="Khóa học online">
+          <i class="fa fa-youtube-play fa-fw"></i>
+        </span>
+        <a ng-href="#/books/{{book.slug}}">{{ book.title }}</a>&nbsp;
+        <span ng-if="book.image_url != ''  && book.image_url != undefined" title="Có ảnh bìa">
+          <i class="fa fa-picture-o fa-fw"></i>
+        </span>
+        <span ng-if="book.review != '' && book.review != undefined" title="Có nhận xét">
+          <i class="fa fa-trophy fa-fw"></i>
+        </span>
+        <span ng-if="book.review_url != '' && book.review_url != undefined" title="Blog">
+          <i class="fa fa-link fa-fw"></i>
+        </span>
+        <span ng-if="book.more_info != '' && book.more_info != undefined" title="Ghi chú">
+          <i class="fa fa-paperclip fa-fw"></i>
+        </span>
+      </td>
+      <td>{{ book.author }}</td>
+      <td>
+        <span class="text-success" ng-if="book.reading_status == 'read' || book.reading_status == 'need_to_read_again'">
+          <i class="fa fa-check-circle fa-fw"></i>
+        </span>
+        <span ng-if="book.reading_status == 'to_read' ">Chưa đọc</span>
+        <span ng-if="book.reading_status == 'want_to_read' ">Dự định đọc</span>
+        <span ng-if="book.reading_status == 'reading' ">Đang đọc</span>
+        <span ng-if="book.reading_status == 'read' ">Đã đọc</span>
+        <span ng-if="book.reading_status == 'need_to_read_again' ">Sẽ đọc lại</span>
+      </td>
+      <td>
+        <span ng-if="book.current_status=='available'">Sẵn có</span>
+        <span ng-if="book.current_status=='has_lost'">Đã mất</span>
+        <span ng-if="book.current_status=='has_lent'">Cho mượn - Người giữ - <strong>{{ book.borrower }}</strong></span>
+        <span ng-if="book.current_status=='has_given'">Đã tặng - Người được tặng - <strong>{{ book.receiver }}</strong></span>
+        <span ng-if="book.current_status=='licensed'">Có bản quyền</span>
+        <span ng-if="book.current_status=='not_licensed'">Không có bản quyền</span>
+      </td>
+      <td><div star-rating="" ng-model="book.rating" readonly=true></div></td>
+      </tr>
+  </tbody>
+</table>

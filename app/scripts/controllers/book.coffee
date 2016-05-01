@@ -1,6 +1,6 @@
 'use strict'
 angular.module 'fireBooksApp'
-.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', '$firebaseArray', 'ConnectionService', 'BooksService', 'imgurService', 'ElasticsearchService', ($q, $location, $timeout, $scope, $routeParams, $firebaseArray, ConnectionService, BooksService, imgurService, ElasticsearchService) ->
+.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', '$firebaseArray', 'ConnectionService', 'BooksService', 'imgurService', 'ElasticsearchService', 'userPayload', ($q, $location, $timeout, $scope, $routeParams, $firebaseArray, ConnectionService, BooksService, imgurService, ElasticsearchService, userPayload) ->
 
   $scope.isUploading = false
 
@@ -25,6 +25,7 @@ angular.module 'fireBooksApp'
     LoadBookBySlug()
 
   $scope.create = () ->
+    return swal("Bạn chưa đăng nhập!","Bạn không thể sử dụng chức năng này","error") if userPayload.uid is null
     return unless $scope.book?
     return unless $scope.book.title?
     return unless $scope.book.author?
@@ -58,6 +59,7 @@ angular.module 'fireBooksApp'
     return
 
   $scope.save = () ->
+    return swal("Bạn chưa đăng nhập!","Bạn không thể sử dụng chức năng này","error") if userPayload.uid is null
     return unless $scope.book?
     return unless $scope.$bookId?
     if $scope.isEditing is true
@@ -70,9 +72,11 @@ angular.module 'fireBooksApp'
       )
 
   $scope.edit = () ->
+    return swal("Bạn chưa đăng nhập!","Bạn không thể sử dụng chức năng này","error") if userPayload.uid is null
     return $scope.isEditing = true
 
   $scope.destroy = () ->
+    return swal("Bạn chưa đăng nhập!","Bạn không thể sử dụng chức năng này","error") if userPayload.uid is null
     return unless $scope.$bookId?
     ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
     ref.remove((error)->

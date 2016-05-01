@@ -19,7 +19,6 @@ angular.module 'fireBooksApp'
     $scope.countOfPrintedBooks = values[1]
     $scope.countOfDigitalBooks = values[2]
     $scope.countOfReadBooks = parseInt(values[3]) + parseInt(values[4])
-    console.log values
     $scope.quote = values[5]
 
 ]

@@ -46,7 +46,6 @@ angular.module 'fireBooksApp'
 
   calculatePageArray = () ->
     return $scope.pageArray = [1,2,3,4,5] if $scope.currentPage is 1 || $scope.currentPage is 2
-    console.log $scope.totalPage
     return $scope.pageArray = [$scope.currentPage-4,$scope.currentPage-3,$scope.currentPage-2,$scope.currentPage-1,$scope.currentPage] if $scope.currentPage is $scope.totalPage
     return $scope.pageArray = [$scope.currentPage-3,$scope.currentPage-2,$scope.currentPage-1,$scope.currentPage,$scope.currentPage+1] if $scope.currentPage is $scope.totalPage - 1
     l = $scope.currentPage - 2

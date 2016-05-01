@@ -1,24 +1,20 @@
 'use strict'
 angular.module 'fireBooksApp'
-.controller 'LogInCtrl', [ '$rootScope', '$scope', 'ConnectionService', ($rootScope, $scope, ConnectionService) ->
-  $rootScope.uid = undefined
-  $rootScope.user =
+.controller 'LogInCtrl', [ '$rootScope', '$scope', 'ConnectionService', 'userPayload', ($rootScope, $scope, ConnectionService, userPayload) ->
+
+  $scope.user =
     email: ""
     password: ""
-
-  $rootScope.$on('UserLogOut', (event, args)->
-    $rootScope.uid = undefined if $rootScope.uid?
-  )
 
   $scope.logIn = () ->
     return unless $scope.user?
     return unless $scope.user.email?
     return unless $scope.user.password?
-    $rootScope.uid = undefined
 
     ConnectionService.logIn($scope.user).then (res) ->
-      $rootScope.uid = res.uid
-      $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
+      userPayload.uid = res.uid
+      $scope.uid = res.uid
+      $scope.$emit('userLoggedIn', res.uid)
 
   return
 ]

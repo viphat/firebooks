@@ -13,14 +13,12 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-
     <!-- endbuild -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,latin-ext,vietnamese">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,latin-ext,vietnamese">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/viphat.work/books/assets/sweetalert.css">
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/viphat.work/books/assets/facebook.css">
-    <link rel="stylesheet" href="styles/themes.css">
   </head>
   <body ng-app="fireBooksApp">
     <div ng-view=""></div>
@@ -36,7 +34,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/viphat.work/books/assets/sweetalert.min.js"></script>
-    <script src="bower_components/elasticsearch/elasticsearch.angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
 
     <!-- AngularFire -->
@@ -49,7 +46,9 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/viphat.work/books/assets/angular-marked.min.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/viphat.work/books/assets/angular-modal-service.min.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
-
+    <!-- bower:js -->
+    <script src="bower_components/elasticsearch/elasticsearch.js"></script>
+    <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->

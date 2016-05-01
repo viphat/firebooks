@@ -8,18 +8,7 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'BooksCtrl', ['$q', '$routeParams', '$location', '$scope', 'ConnectionService', 'BooksService', 'esClient', ($q,  $routeParams, $location, $scope, ConnectionService, BooksService, esClient) ->
-
-  TestElasticConnection = () ->
-    esClient.cluster.state({
-      metric: [
-        'cluster_name',
-        'nodes',
-        'master_node',
-        'version'
-      ]
-    }).then (resp) ->
-      console.log resp
+.controller 'BooksCtrl', ['$q', '$routeParams', '$location', '$scope', 'ConnectionService', 'BooksService', ($q,  $routeParams, $location, $scope, ConnectionService, BooksService ) ->
 
   $scope.isLoading = true
   $scope.firstKey = undefined

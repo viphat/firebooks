@@ -8,9 +8,11 @@
  # Controller of the fireBooksApp
 ###
 angular.module 'fireBooksApp'
-.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', '$firebaseArray', 'ConnectionService', 'BooksService', 'imgurService', ($q, $location, $timeout, $scope, $routeParams, $firebaseArray, ConnectionService, BooksService, imgurService) ->
+.controller 'BookCtrl', ['$q', '$location', '$timeout', '$scope', '$routeParams', '$firebaseArray', 'ConnectionService', 'BooksService', 'imgurService', 'ElasticsearchService', ($q, $location, $timeout, $scope, $routeParams, $firebaseArray, ConnectionService, BooksService, imgurService, ElasticsearchService) ->
 
   $scope.isUploading = false
+
+  # ElasticsearchService.IndexAllBooks()
 
   LoadBookBySlug = () ->
     return if $scope.isLoading is true
@@ -20,6 +22,9 @@ angular.module 'fireBooksApp'
     ref.orderByChild("slug").equalTo($scope.slug).on("child_added", (snapshot)->
       $scope.book = snapshot.val()
       $scope.$bookId = snapshot.key()
+      # ElasticsearchService.createOrUpdateIndex(snapshot)
+      # ElasticsearchService.searchBooks({title: "sống"}).then (res) ->
+      #   console.log res
       $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
     )
 

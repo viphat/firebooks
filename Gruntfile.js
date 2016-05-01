@@ -176,7 +176,7 @@ module.exports = function (grunt) {
               coffee: '\'{{filePath}}\''
             }
           }
-          }
+        }
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],

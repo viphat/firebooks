@@ -1,0 +1,17 @@
+<div id="QuotePage" page-wrapper="">
+  <form name="quoteForm" ng-submit="create()">
+  <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+    <fieldset class="form-group" ng-class="{ 'has-danger' : quoteForm.quoteContent.$dirty && quoteForm.quoteContent.$invalid }" >
+      <label for="QuoteContent">Quote content</label>
+      <textarea class="form-control" name="quoteContent" id="QuoteContent" ng-model="quote.content" rows="6" required=""></textarea>
+    </fieldset>
+    <fieldset class="form-group" ng-class="{ 'has-danger' : quoteForm.quoteSource.$dirty && quoteForm.quoteSource.$invalid }">
+      <label for="QuoteSource">Quote source</label>
+      <textarea name="quoteSource" class="form-control" id="QuoteSource" ng-model="quote.source" rows="2" required=""></textarea>
+    </fieldset>
+    <button type="submit" class="btn btn-primary" ng-disabled="quoteForm.$invalid">
+      <i class="fa fa-commenting-o fa-fw"></i>&nbsp;Create
+    </button>
+  </div>
+  </form>
+</div>

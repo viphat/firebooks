@@ -71,6 +71,12 @@ angular
       active:
         page: 'main'
         sub: 'book'
+    .when '/quotes/new',
+      templateUrl: 'views/new_quote.html'
+      controller: 'QuoteCtrl'
+      active:
+        page: 'main'
+        sub: 'quote'
     .when '/about',
       templateUrl: 'views/about.html'
       controller: 'AboutCtrl'

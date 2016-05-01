@@ -7,9 +7,10 @@
     <span aria-hidden="true">×</span>
     <span class="sr-only">Close</span>
   </button>
-  <blockquote>
-    <p class="m-b-0">Sự học như đi thuyền trên dòng nước ngược không tiến ắt phải lùi.</p>
-    <footer class="blockquote-footer">Khuyết danh</footer>
+  <heart-pulse ng-show='isLoading'></heart-pulse>
+  <blockquote ng-if="!isLoading">
+    <p class="m-b-0" marked="quote.content "></p>
+    <footer class="text-muted" marked="quote.source"></footer>
   </blockquote>
 </div>
 

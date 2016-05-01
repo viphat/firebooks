@@ -34,9 +34,9 @@ angular.module 'fireBooksApp'
     return unless $scope.book.current_status?
     # Get Last Book
     ref = ConnectionService.connectFirebase()
-    book = $firebaseArray(ref.child("books").orderByPriority().limitToLast(1))
-    book.$loaded ()->
-      priority = parseInt(_.first(book).$priority) + 1
+    books = $firebaseArray(ref.child("books").orderByPriority().limitToLast(1))
+    books.$loaded ()->
+      priority = parseInt(_.first(books).$priority) + 1
       ref = ConnectionService.connectFirebase("books")
       _.merge($scope.book, { '.priority': priority })
       ref.push($scope.book, (error)->
@@ -64,6 +64,7 @@ angular.module 'fireBooksApp'
       ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
       ref.update($scope.book, (error)->
         return if error?
+        swal("Done","Cập nhật thành công!", "success")
         $scope.isEditing = false
         $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
       )

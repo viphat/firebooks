@@ -47,6 +47,12 @@ angular
       active:
         page: 'main'
         sub: 'books'
+    .when '/search',
+      templateUrl: 'views/search.html'
+      controller: 'SearchCtrl'
+      active:
+        page: 'main'
+        sub: 'search'
     .when '/books/pages/:page',
       templateUrl: 'views/books.html'
       controller: 'BooksCtrl'

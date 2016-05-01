@@ -16,7 +16,8 @@
       </td>
     </tr>
     <tr ng-repeat="book in books track by $index">
-      <td>{{ (currentPage - 1) * pageSize + $index + 1}}</td>
+      <td ng-if="currentPage >= 1">{{ (currentPage - 1) * pageSize + $index + 1}}</td>
+      <td ng-if="!currentPage">{{ $index + 1}}</td>
       <td>
         <span ng-if="book.book_type == 'paper'" title="Sách giấy">
           <i class="fa fa-book fa-fw"></i>

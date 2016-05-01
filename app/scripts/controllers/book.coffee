@@ -13,8 +13,6 @@ angular.module 'fireBooksApp'
       $scope.book = snapshot.val()
       $scope.$bookId = snapshot.key()
       ElasticsearchService.createOrUpdateIndex(snapshot)
-      # ElasticsearchService.searchBooks({title: "sống"}).then (res) ->
-      #   console.log res
       $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
     )
 
@@ -42,14 +40,11 @@ angular.module 'fireBooksApp'
       ref = ConnectionService.connectFirebase("books")
       _.merge($scope.book, { '.priority': priority })
       ref.push($scope.book, (error)->
-        if (error)
-          console.log("Add Book Failed")
-        else
-          console.log("Successful")
-          $timeout(()->
-            $location.path("/books/#{$scope.book.slug}")
-            $scope.$apply()
-          , 1500 )
+        return if error?
+        $timeout(()->
+          $location.path("/books/#{$scope.book.slug}")
+          $scope.$apply()
+        , 1500 )
       )
 
   $scope.selectBookById = (id) ->
@@ -68,9 +63,9 @@ angular.module 'fireBooksApp'
     if $scope.isEditing is true
       ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
       ref.update($scope.book, (error)->
-        unless (error)
-          $scope.isEditing = false
-          $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
+        return if error?
+        $scope.isEditing = false
+        $scope.$apply() unless ($scope.$$phase && $scope.$root.$$phase)
       )
 
   $scope.edit = () ->
@@ -80,14 +75,12 @@ angular.module 'fireBooksApp'
     return unless $scope.$bookId?
     ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
     ref.remove((error)->
-      if error
-        console.log("Deleted Failed!")
-      else
-        console.log("Deleted Succesful.")
-        $timeout(()->
-          $location.path("/books/")
-          $scope.$apply()
-        , 1500 )
+      return if error?
+      ElasticsearchService.deleteFromIndexes($scope.$bookId)
+      $timeout(()->
+        $location.path("/books/")
+        $scope.$apply()
+      , 1500 )
     )
 
   $scope.uploadToImgur = (event) ->

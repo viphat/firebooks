@@ -1,0 +1,16 @@
+<div id="SearchPage" page-wrapper="">
+  <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+    <div class="input-group">
+      <input type="search" class="form-control" id="searchTerm" ng-model="obj.searchTerm" placeholder="Search in Books">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" ng-click="search()">
+          <i class="fa fa-search fa-fw"></i>
+        </button>
+      </span>
+    </div>
+    <small class="text-muted">Ví dụ: "title": "Sống và khát vọng", "author": "Trần Đăng Khoa"</small>
+  </div>
+  <div ng-if="books.length > 0" class="table-responsive">
+    <books-table ng-if="books.length > 0" books="books" is-loading="isLoading" current-page="currentPage" page-size="pageSize"></books-table>
+  </div>
+</div>

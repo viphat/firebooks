@@ -13,10 +13,20 @@ angular.module 'fireBooksApp'
         )
       )
 
+  deleteFromIndexes = (id) ->
+    defer = $q.defer()
+    esClient.delete({index: "firebase", type: "books", id: id}, (error, resp)->
+      if error?
+        defer.reject(error)
+      else
+        defer.resolve(resp)
+    )
+    defer.promise
+
   createOrUpdateIndex = (snap) ->
     defer = $q.defer()
     esClient.index({index: "firebase", type: "books", id: snap.key(), body: snap.val() }, (error, resp) ->
-      if (error)
+      if error?
         defer.reject(error)
       else
         defer.resolve(resp)
@@ -35,7 +45,13 @@ angular.module 'fireBooksApp'
       }
     }).then (resp) ->
       if resp.hits.hits? && resp.hits.hits.length > 0
-        defer.resolve resp.hits.hits
+        books = []
+        _.each(resp.hits.hits, (item) ->
+          book = item._source
+          _.merge(book, { ".id": item._id })
+          books.push book
+        )
+        defer.resolve books
       else
         defer.reject
     defer.promise
@@ -55,6 +71,7 @@ angular.module 'fireBooksApp'
     createOrUpdateIndex: createOrUpdateIndex
     searchBooks: searchBooks
     IndexAllBooks: IndexAllBooks
+    deleteFromIndexes: deleteFromIndexes
   }
 
 ]

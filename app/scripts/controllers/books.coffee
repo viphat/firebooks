@@ -1,13 +1,14 @@
 'use strict'
 angular.module 'fireBooksApp'
-.controller 'BooksCtrl', ['$q', '$routeParams', '$location', '$scope', 'ConnectionService', 'BooksService', ($q,  $routeParams, $location, $scope, ConnectionService, BooksService ) ->
+.controller 'BooksCtrl', ['$q', '$timeout', '$routeParams', '$location', '$scope', 'ConnectionService', 'BooksService', ($q,  $timeout, $routeParams, $location, $scope, ConnectionService, BooksService ) ->
 
   $scope.isLoading = true
   $scope.firstKey = undefined
   $scope.lastKey = undefined
-  $scope.oldPage = undefined
+  $scope.oldPage = undefined unless $scope.oldPage?
   $scope.currentPage = parseInt($routeParams.page) || 1
   $scope.pageSize = 10
+  $scope.books = []
   loadTotalPage = () ->
     BooksService.countOfAllBooks().then (res) ->
       $scope.totalPage =  parseInt( res / $scope.pageSize + 1)
@@ -59,18 +60,26 @@ angular.module 'fireBooksApp'
   LoadBooks = () ->
     $scope.isLoading = true
     BooksService.fetchBooks($scope.currentPage, $scope.pageSize, $scope.oldPage, $scope.firstKey, $scope.lastKey).then (res) ->
-      $scope.books = res
+      books = res
       $scope.isLoading = false
-      if $scope.currentPage != 1 && $scope.oldPage?
+      $scope.books = null
+      if $scope.currentPage != 1
         if $scope.oldPage < $scope.currentPage
-          $scope.books = _.tail($scope.books)
+          $scope.books = _.tail(books)
         else
-          if $scope.books.length < $scope.pageSize
-            $scope.books = _.take($scope.books, $scope.books.length)
+          if books.length < $scope.pageSize
+            $scope.books = _.take(books, books.length)
           else
-            $scope.books = _.take($scope.books, $scope.books.length - 1)
-      $scope.firstKey = _.first($scope.books).$id
-      $scope.lastKey = _.last($scope.books).$id
+            $scope.books = _.take(books, books.length - 1)
+      else
+        $scope.books = books
+
+      $timeout(()->
+        $scope.firstKey = _.first($scope.books).$id if $scope.books?
+        $scope.lastKey = _.last($scope.books).$id if $scope.books?
+        $scope.$apply()
+      , 500)
+
 
   LoadBooks()
 

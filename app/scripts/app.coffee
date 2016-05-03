@@ -41,18 +41,18 @@ angular
       active:
         page: 'main'
         sub: 'logIn'
-    .when '/books',
-      templateUrl: 'views/books.html'
-      controller: 'BooksCtrl'
-      active:
-        page: 'main'
-        sub: 'books'
     .when '/search',
       templateUrl: 'views/search.html'
       controller: 'SearchCtrl'
       active:
         page: 'main'
         sub: 'search'
+    .when '/books',
+      templateUrl: 'views/books.html'
+      controller: 'BooksCtrl'
+      active:
+        page: 'main'
+        sub: 'books'
     .when '/books/pages/:page',
       templateUrl: 'views/books.html'
       controller: 'BooksCtrl'
@@ -71,6 +71,18 @@ angular
       active:
         page: 'main'
         sub: 'book'
+    .when '/quotes',
+      templateUrl: 'views/quotes.html'
+      controller: 'QuotesCtrl'
+      active:
+        page: 'main'
+        sub: 'quotes'
+    .when '/quotes/pages/:page',
+      templateUrl: 'views/quotes.html'
+      controller: 'QuotesCtrl'
+      active:
+        page: 'main'
+        sub: 'quotes'
     .when '/quotes/new',
       templateUrl: 'views/new_quote.html'
       controller: 'QuoteCtrl'

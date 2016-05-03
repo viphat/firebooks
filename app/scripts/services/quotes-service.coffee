@@ -1,20 +1,30 @@
 angular.module 'fireBooksApp'
-.service 'QuotesService', ['$q', '$firebaseArray', 'ConnectionService', ($q, $firebaseArray, ConnectionService) ->
+.service 'QuotesService', ['$q', '$firebaseArray', 'ConnectionService', 'MainService', ($q, $firebaseArray, ConnectionService, MainService) ->
+
+  fetchQuotes = (page=1, pageSize=10, oldPage=null, firstKey=null, lastKey=null) ->
+    MainService.fetchObjects("quotes", page, pageSize, oldPage, firstKey, lastKey )
 
   getRandomInt = (min, max) ->
     return Math.floor(Math.random() * (max - min)) + min
 
-  getRandomQuote = () ->
+  getNumberOfQuotes = () ->
     defer = $q.defer()
     ref = ConnectionService.connectFirebase("quotes")
     ref.once("value", (snapshot) ->
-      numOfQuotes = snapshot.numChildren()
+      defer.resolve snapshot.numChildren()
+    )
+    defer.promise
+
+  getRandomQuote = () ->
+    defer = $q.defer()
+    ref = ConnectionService.connectFirebase("quotes")
+    getNumberOfQuotes().then (res) ->
+      numOfQuotes = res
       magicNumber = getRandomInt(1, numOfQuotes)
       quoteRef = ConnectionService.connectFirebase()
       quote = $firebaseArray(quoteRef.child("quotes").orderByPriority().startAt(magicNumber).limitToLast(1))
       quote.$loaded () ->
         defer.resolve _.first(quote)
-    )
     defer.promise
 
   addNewQuote = (quote) ->
@@ -35,6 +45,8 @@ angular.module 'fireBooksApp'
   return {
     getRandomQuote: getRandomQuote
     addNewQuote: addNewQuote
+    fetchQuotes: fetchQuotes
+    getNumberOfQuotes: getNumberOfQuotes
   }
 
 ]

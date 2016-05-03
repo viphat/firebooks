@@ -4,6 +4,7 @@
     <a class="nav-link" href='#/books' ng-class="{'active' : activeSubItem == 'books' || activeSubItem == 'book' }"><i class="fa fa-archive fa-fw"></i> Books</a>
     <a class="nav-link" ng-if="uid" href="#/books/new" ng-class="{'active' : activeSubItem == 'new book' }"><i class="fa fa-plus-square fa-fw"></i> Add a Book</a>
     <a class="nav-link" href="#/search" ng-class="{'active' : activeSubItem == 'search' }" ><i class="fa fa-search fa-fw"></i> Search in Books</a>
+    <a class="nav-link" href="#/quotes" ng-class="{'active' : activeSubItem == 'quotes' }"><i class="fa fa-graduation-cap fa-fw"></i> Quotes</a>
     <a class="nav-link" ng-if="uid" href="#/quotes/new" ng-class="{'active' : activeSubItem == 'quote' }"><i class="fa fa-commenting-o fa-fw"></i> Add a Quote</a>
     <a class="nav-link" ng-if="uid" href="#/authors" ng-class="{'active' : activeSubItem == 'authors' }"><i class="fa fa-users fa-fw"></i> Authors</a>
     <a class="nav-link" href="#/login" ng-class="{'active' : activeSubItem == 'logIn' }" ng-if="uid == null" ng-click="setSubView('logIn')"><i class="fa fa-sign-in fa-fw"></i> Log in</a>

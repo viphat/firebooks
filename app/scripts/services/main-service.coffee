@@ -1,5 +1,60 @@
 angular.module 'fireBooksApp'
-.service 'MainService', [ () ->
+.service 'MainService', ['$q', '$firebaseArray', 'ConnectionService', ($q, $firebaseArray, ConnectionService) ->
+
+  calculatePageArray = (currentPage, totalPage) ->
+    if totalPage <= 5
+      i = 1
+      arr = []
+      while i <= totalPage
+        arr.push i
+        i = i + 1
+      return arr
+    return [1,2,3,4,5] if currentPage is 1 || currentPage is 2
+    return [currentPage-4, currentPage-3,  currentPage-2, currentPage-1, currentPage] if currentPage is totalPage
+    return [currentPage-3, currentPage-2, currentPage-1, currentPage, currentPage+1] if currentPage is totalPage - 1
+    l = currentPage - 2
+    r = currentPage + 2
+    return [l, l+1, currentPage, r-1, r]
+
+
+  fetchObjects = (child_key, page, pageSize, oldPage, firstKey, lastKey) ->
+    defer = $q.defer()
+    ref = ConnectionService.connectFirebase()
+    if page is 1
+      objects = $firebaseArray(ref.child(child_key).orderByKey().limitToFirst(pageSize))
+    else
+      gap = Math.abs(oldPage - page)
+      NoItemFetched = (gap - 1) * pageSize
+      if oldPage > page
+        if gap is 1
+          objects = $firebaseArray(ref.child(child_key).orderByKey().endAt(firstKey).limitToLast(pageSize+1))
+        else
+          tmp = $firebaseArray(ref.child(child_key).orderByKey().endAt(firstKey).limitToLast(NoItemFetched+1))
+          tmp.$loaded () ->
+            firstKey = _.first(tmp).$id
+            objects = $firebaseArray(ref.child(child_key).orderByKey().endAt(firstKey).limitToLast(pageSize+1))
+            objects.$loaded ()->
+              defer.resolve objects
+      else
+        if gap is 1
+          objects = $firebaseArray(ref.child(child_key).orderByKey().startAt(lastKey).limitToFirst(pageSize+1))
+        else
+          if lastKey is null
+            tmp = $firebaseArray(ref.child(child_key).orderByKey().limitToFirst(NoItemFetched+1))
+          else
+            tmp = $firebaseArray(ref.child(child_key).orderByKey().startAt(lastKey).limitToFirst(NoItemFetched+1))
+          tmp.$loaded () ->
+            lastKey = _.last(tmp).$id
+            objects = $firebaseArray(ref.child(child_key).orderByKey().startAt(lastKey).limitToFirst(pageSize+1))
+            objects.$loaded ()->
+              defer.resolve objects
+
+    if objects?
+      objects.$loaded ()->
+        defer.resolve objects
+
+    defer.promise
+
 
   slugify = (text) ->
     text = text.toString().toLowerCase()
@@ -16,7 +71,9 @@ angular.module 'fireBooksApp'
     return text
 
   return {
+    calculatePageArray: calculatePageArray
     slugify: slugify
+    fetchObjects: fetchObjects
   }
 
 ]

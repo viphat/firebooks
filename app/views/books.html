@@ -2,5 +2,5 @@
   <div class="table-responsive">
     <books-table books="books" is-loading="isLoading" current-page="currentPage" page-size="pageSize"></books-table>
   </div>
-  <div ng-if="!isLoading" ng-include="'views/pagination.html'"></div>
+  <div ng-if="!isLoading" pagination="" current-page="currentPage" old-page="oldPage" total-page="totalPage" page-size="pageSize" page-array="pageArray" first-key="firstKey" last-key="lastKey" child-key="books"></div>
 </div>

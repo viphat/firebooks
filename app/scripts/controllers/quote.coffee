@@ -1,6 +1,6 @@
 'use strict'
 angular.module 'fireBooksApp'
-.controller 'QuoteCtrl', [ '$scope', 'QuotesService', 'ConnectionService', 'userPayload', ($scope, QuotesService, ConnectionService, userPayload) ->
+.controller 'QuoteCtrl', [ '$scope', '$timeout', '$location', 'QuotesService', 'ConnectionService', 'userPayload', ($scope, $timeout, $location, QuotesService, ConnectionService, userPayload) ->
   $scope.quote =
     content: ""
     source: ""
@@ -12,7 +12,11 @@ angular.module 'fireBooksApp'
     return if $scope.isPosting is true
     $scope.isPosting = true
     QuotesService.addNewQuote($scope.quote).then (res) ->
+      $scope.isPosting = false
       swal("Done","Tạo một quote mới thành công!", "success")
+      $timeout(()->
+        $location.path("/quotes")
+      , 1000)
 
 
   return

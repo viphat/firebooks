@@ -16,7 +16,6 @@ angular.module 'fireBooksApp'
     r = currentPage + 2
     return [l, l+1, currentPage, r-1, r]
 
-
   fetchObjects = (child_key, page, pageSize, oldPage, firstKey, lastKey) ->
     defer = $q.defer()
     ref = ConnectionService.connectFirebase()
@@ -54,7 +53,6 @@ angular.module 'fireBooksApp'
         defer.resolve objects
 
     defer.promise
-
 
   slugify = (text) ->
     text = text.toString().toLowerCase()

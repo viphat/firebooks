@@ -39,7 +39,7 @@ angular.module 'fireBooksApp'
     books.$loaded ()->
       priority = parseInt(_.first(books).$priority) + 1
       ref = ConnectionService.connectFirebase("books")
-      _.merge($scope.book, { '.priority': priority })
+      _.merge($scope.book, { '.priority': priority, 'created_at': Date.now(), 'updated_at': Date.now() })
       ref.push($scope.book, (error)->
         return if error?
         $timeout(()->
@@ -62,6 +62,10 @@ angular.module 'fireBooksApp'
     return swal("Bạn chưa đăng nhập!","Bạn không thể sử dụng chức năng này","error") if userPayload.uid is null
     return unless $scope.book?
     return unless $scope.$bookId?
+    unless $scope.book.created_at
+      $scope.book.created_at = Date.now()
+    $scope.book.updated_at = Date.now()
+
     if $scope.isEditing is true
       ref = ConnectionService.connectFirebase("books/#{$scope.$bookId}")
       ref.update($scope.book, (error)->
